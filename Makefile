@@ -48,6 +48,8 @@ teensy_loader_cli: teensy_loader_cli.c
 
 endif
 
+install: teensy_loader_cli
+	mv teensy_loader_cli /usr/local/bin
 
 clean:
 	rm -f teensy_loader_cli teensy_loader_cli.exe
