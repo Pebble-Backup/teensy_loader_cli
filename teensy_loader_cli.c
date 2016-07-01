@@ -120,7 +120,8 @@ int main(int argc, char **argv)
 	printf_verbose("Read \"%s\": %d bytes, %.1f%% usage\n",
 		filename, num, (double)num / (double)code_size * 100.0);
 
-	// open the USB device
+	// open the USB device with a timeout of ~10 seconds
+	int timeout = 40;
 	while (1) {
 		if (teensy_open()) break;
 		if (hard_reboot_device) {
@@ -142,6 +143,7 @@ int main(int argc, char **argv)
 			printf_verbose(" (hint: press the reset button)\n");
 			waited = 1;
 		}
+		if (timeout-- == 0) die("Unable to open device\n");
 		delay(0.25);
 	}
 	printf_verbose("Found HalfKay Bootloader\n");
